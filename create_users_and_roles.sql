@@ -47,8 +47,13 @@ create role hr_api_exec_role;
 create role hr_errors_role;
 
 -- once we are done, create session will be revoked.
+-- create a admin_hr_api role that will have the privilege
+-- create procedure.
+create role admin_hr_api identified by x;
+grant create procedure to admin_hr_api;
 grant 
-	create session
+	create session,
+	admin_hr_api
 to hr_api;
 
 grant 
