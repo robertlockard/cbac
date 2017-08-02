@@ -19,18 +19,19 @@ end pEmp_DML;
 -- time the use_emp_role does not have any privileges.
 grant use_emp_role to package pkgEmp_DML;
 
-create or replace package body pkg_Emp_DML AS
+CREATE OR REPLACE PACKAGE BODY pkg_Emp_DML AS
 	-- insert a row
-	procedure pIns_emp(pEmpRec hr_decls.r.t_emp_row) IS
+	PROCEDURE pIns_emp(pEmpRec IN hr_decls.r.t_emp_row) IS
 	BEGIN
-		/* TO DO FILL IN THE LOGIC*/
-		NULL;
+		INSERT INTO hr.employess VALUES pEmpRec;
 	END pIns_emp;
 	-- select a row based on phone number
-	procedure pSel_emp_by_phone(pPhoneNumber varchar2,
-								pEmpRec hr_decls.r.t_emp_row) IS
+	PROCEDURE pSel_emp_by_phone(pPhoneNumber IN 	VARCHAR2,
+								pEmpRec 		OUT hr_decls.r.t_emp_row) IS
 	BEGIN
-		/* TO DO FILL IN THE LOGIC*/
-		NULL;
+		SELECT *
+		INTO pEmpRec
+		FROM hr.employees
+		WHERE phone_number = pPhoneNumber;
 	END pSel_emp_by_phone;
 END pkg_Emp_DML;
