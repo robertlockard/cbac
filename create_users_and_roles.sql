@@ -32,7 +32,7 @@ create user app_user1 identified by x;
 -- be assigned to the hr_api packages
 -- that access the hr objects.
 
-create role use_sel_emp_role;
+create role use_emp_role;
 
 -- we need a role for help desk errors
 -- this will be assigned to the help_desk_reporter
@@ -97,7 +97,7 @@ with delegate option;
 
 grant 
 	create session,
-	use_sel_emp_role
+	use_emp_role
 to app_user1;
 
 --
