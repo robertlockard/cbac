@@ -1,4 +1,4 @@
--- we are going to create the users and roles 
+-- we are going to create the users and roles
 -- we need. The user hr_api is going to have
 -- access to the hr schema.
 create user hr_api identified by x;
@@ -8,14 +8,14 @@ create user hr_api identified by x;
 create user hr_code identified by x;
 
 -- the hr_decls package will hold constants
--- and type definations 
+-- and type definations
 create user hr_decls identified by x;
 
 -- the hr_errors schema will hold errors
--- that are raised. 
+-- that are raised.
 create user hr_errors identified by x;
--- the hr_errors schema needs privs 
--- on the tablespace to 
+-- the hr_errors schema needs privs
+-- on the tablespace to
 grant unlimited tablespace to hr_errors;
 
 -- the hr_errors_reporter schema will hold
@@ -28,7 +28,7 @@ create user app_user1 identified by x;
 
 -- now for the roles we will need.
 -- we are going to need a role for hr_api to
--- access the hr objects. this role will 
+-- access the hr objects. this role will
 -- be assigned to the hr_api packages
 -- that access the hr objects.
 
@@ -41,7 +41,7 @@ create role use_emp_role;
 -- reporting and collecing packages.
 create role use_helpdesk_role;
 
--- 
+--
 create role hr_sel_emp_role;
 create role hr_api_exec_role;
 create role hr_errors_role;
@@ -51,51 +51,55 @@ create role hr_errors_role;
 -- create procedure.
 create role admin_hr_api identified by x;
 grant create procedure to admin_hr_api;
-grant 
+grant
 	create session,
 	admin_hr_api
 to hr_api;
 
-grant 
+grant
 	hr_sel_emp_role
 to hr_api with delegate option;
 
-grant 
-	create session to 
-	hr_code;
+create role admin_hr_code identified by x;
+grant create procedure to admin_hr_code;
 
-grant 
-	hr_api_exec_role 
+grant
+	create session to
+	hr_code;
+alter user hr_code default role none;
+
+grant
+	hr_api_exec_role
 to hr_code with delegate option;
 
 -- lets create an admin_hr_decls_role
--- that will be granted the create 
+-- that will be granted the create
 -- procedure privilege.
 
 create role admin_hr_decls_role identified by x;
 grant create procedure to admin_hr_decls_role;
 
-grant 
-	create session, 
+grant
+	create session,
 	admin_hr_decls_role
 to hr_decls;
 
--- this will force the user to enter the 
--- password of the role to make changes 
+-- this will force the user to enter the
+-- password of the role to make changes
 -- to the hr_decls schema.
 alter user hr_decls default role none;
 
 grant create session to hr_errors;
-grant 
-	hr_errors_role 
+grant
+	hr_errors_role
 to hr_errors with delegate option;
 
 grant create session to hr_errors_reporter;
-grant hr_errors_role to 
-	hr_errors_reporter 
+grant hr_errors_role to
+	hr_errors_reporter
 with delegate option;
 
-grant 
+grant
 	create session,
 	use_emp_role
 to app_user1;
